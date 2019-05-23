@@ -29,6 +29,7 @@ class Weather extends Component {
       render() {
         const {items} = this.state;
         return (
+            
           <div className="boxWhite">
             {
               items.length > 0 ? items.map(item => {

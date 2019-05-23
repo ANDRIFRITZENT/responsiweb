@@ -7,7 +7,9 @@ class Main extends Component {
       return (
         <HashRouter>
           <div>
-            <h1 className="title">Weather API Yogyakarta</h1>
+            <div style={{textAlign:"center"}}>
+            <h1 className="title">Prakiraan cuaca Yogyakarta</h1>
+            </div>
             <ul className="header">
               <li><NavLink exact to="/">Weather</NavLink></li>
    
