@@ -10,13 +10,13 @@ class Weather extends Component {
     componentDidMount() {
         fetch("https://api.openweathermap.org/data/2.5/forecast?q=Yogyakarta,id&mode=json&appid=99819fc994ebea37f427a44f569e9cdf&units=metric")
         .then(res => res.json())
-        .then(parsedJSON => parsedJSON.results.map(data => (
+        .then(parsedJSON => parsedJSON.list.map(data => (
           {
-            temp_Min: `${data.list.main.temp_min}`,
-            temp_Max: `${data.list.main.temp_max}`,
-            temp_Aja:  `${data.list.main.temp}`,
-            weather_Aja: `${data.list.main.weather}`,
-            dataTime: `${data.list.dt_txt}`,
+            temp_Min: `${data.main.temp_min}`,
+            temp_Max: `${data.main.temp_max}`,
+            temp_Aja:  `${data.main.temp}`,
+            weather_Aja: `${data.weather[0].main}`,
+            dataTime: `${data.dt_txt}`,
           }
         )))
         .then(items => this.setState({
@@ -30,25 +30,46 @@ class Weather extends Component {
         const {items} = this.state;
         return (
             
-          <div className="boxWhite">
-            {
-              items.length > 0 ? items.map(item => {
-                const {temp_Aja, temp_Min, temp_Max, weather_Aja, dataTime} = item;
-                return (
-                  <div className="bgCircle">
-                    <div className="ctr">
-                      ini temp :{temp_Aja}<br />
-                      ini temp_min :{temp_Min}<br />
-                      ini temp_max :{temp_Max}<br />
-                      ini weather_aja :{weather_Aja}<br />
-                      ini datatime :{dataTime}<br />
-                    </div>
-    
-                  </div>
-                );
-              }) : null
-            }
-          </div>
+ 
+          <div className="position">
+            <table className="table table-bordered" align="center">
+              <thead>
+              <tr>
+                <th scope="col">Datetime</th>
+                <th scope="col">Temp</th> 
+                <th scope="col">Temp Min</th>
+                <th scope="col">Temp Max</th>
+                <th scope="col">Weather</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                items.length > 0 ? items.map(item => {
+                  const {dataTime,temp_Aja,temp_Min,temp_Max,weather_Aja} = item;
+                  return (
+                    <tr key={dataTime}>
+                      <td scope="row">
+                        {dataTime}
+                      </td>
+                      <td>
+                        {temp_Aja}
+                      </td>
+                      <td>
+                        {temp_Min}
+                      </td>
+                      <td>
+                        {temp_Max}
+                      </td>
+                      <td>
+                        {weather_Aja}
+                      </td>
+                    </tr>  
+                  );
+                }) : null
+              }
+            </tbody>  
+          </table>
+        </div>
         );
       }
     }
